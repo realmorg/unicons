@@ -1,0 +1,27 @@
+<custom-element name="icon-menu-list">
+  <element-state name="list" type="array">[]</element-state>
+  <element-flow>
+    <listen-event mounted>
+      <http-request url="/meta/icon-list.json" as="json">
+        <response-ok>
+          <set-state name="list" from="event"></set-state>
+        </response-ok>
+      </http-request>
+    </listen-event>
+  </element-flow>
+  <template>
+    <style>
+      :host {
+        display: flex;
+        min-width: 250px;
+        max-height: 100vh;
+        overflow: auto;
+      }
+    </style>
+    <repeat-list of="#list">
+      <icon-menu-item _id="$.id">
+        <slot name="$.label"></slot>
+      </icon-menu-item>
+    </repeat-list>
+  </template>
+</custom-element>

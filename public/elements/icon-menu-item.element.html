@@ -1,0 +1,49 @@
+<custom-element name="icon-menu-item">
+  <element-attr name="id" type="string"></element-attr>
+  <element-attr name="selected" type="boolean">false</element-attr>
+  <element-flow>
+    <listen-event on="selected-icon-changed">
+      <script type="module/realm" use="event, globalState, attr">
+        attr.set('is-selected', attr.get('id') === globalState.get('unicons-selected-icon'));
+      </script>
+    </listen-event>
+    <listen-event mounted>
+      <send-event name="selected-icon-changed"></send-event>
+    </listen-event>
+    <listen-event statechanged="unicons-selected-icon">
+      <send-event name="selected-icon-changed"></send-event>
+    </listen-event>
+    <trigger-event click="IconMenuItem">
+      <set-state global name="unicons-selected-icon" value="$.id" from="attr"></set-state>
+    </trigger-event>
+  </element-flow>
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      :host a {
+        display: block;
+        color: var(--gray);
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: color 0.1s ease-in-out, background-color 0.2s ease-in-out;
+      }
+
+      :host([is-selected]) a {
+        color: white;
+        background-color: var(--color-gray-dark);
+      }
+
+      :host(:not([is-selected])) a:hover {
+        color: white;
+        filter: drop-shadow(0 0 10px var(--color-red));
+      }
+    </style>
+    <a ref="IconMenuItem" href="#" onclick="event.preventDefault()">
+      <slot children></slot>
+    </a>
+  </template>
+</custom-element>

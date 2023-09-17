@@ -1,0 +1,9 @@
+{
+  "editorconfig": true,
+  "useTabs": false,
+  "tabWidth": 2,
+  "bracketSameLine": true,
+  "bracketSpacing": true,
+  "htmlWhitespaceSensitivity": "ignore",
+  "printWidth": 400
+}

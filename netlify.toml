@@ -1,0 +1,6 @@
+[[headers]]
+  for = "/*.html"
+
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Headers = "*"

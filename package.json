@@ -1,0 +1,35 @@
+{
+  "name": "unicons",
+  "description": "Agnostic Universal Web Component Icons. Free for HTML, Web Apps, and Your Favorite Frameworks.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "tsx build.tsx",
+    "dev": "DEVMODE=1 tsx build.tsx",
+    "watch": "npm-watch",
+    "clean:dist": "rm -rf dist"
+  },
+  "watch": {
+    "dev": {
+      "patterns": [
+        "public"
+      ],
+      "extensions": "html"
+    }
+  },
+  "dependencies": {
+    "cheerio": "1.0.0-rc.12",
+    "decamelize": "^6.0.0",
+    "jsdom": "^22.1.0",
+    "mkdirp": "^3.0.1",
+    "ora": "^7.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.11.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.6.2",
+    "npm-watch": "^0.11.0",
+    "tsx": "^3.12.10"
+  }
+}

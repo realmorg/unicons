@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unicons: Universal WebComponent Icons by Realm</title>
+    <meta name="description" content="Agnostic Universal Web Component Icons. Free for HTML, Web Apps, and Your Favorite Frameworks." />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Unicons: Universal WebComponent Icons by Realm" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://unicons.realm.codes/banner.png" />
+    <meta property="og:url" content="https://unicons.realm.codes/examples/misc/trigger-debounce" />
+    <meta name="twitter:creator" content="@oknoorap" />
+    <meta content="https://unicons.realm.codes/banner.png" name="twitter:image" />
+    <meta content="Example: Trigger Debounce" name="twitter:title" />
+    <meta content="This example shows how to use trigger debounce." name="twitter:description" />
+    <meta content="Ribhararnus Pracutian" name="author" />
+
+    <link rel="icon" type="image/svg+xml" href="https://unicons.realm.codes/assets/realm-logo.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://unicons.realm.codes/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="https://unicons.realm.codes/favicons/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://unicons.realm.codes/favicons/apple-touch-icon.png" />
+    <link rel="manifest" href="https://unicons.realm.codes/favicons/site.webmanifest" />
+    <link rel="mask-icon" href="https://unicons.realm.codes/favicons/safari-pinned-tab.svg" color="#000000" />
+    <link rel="shortcut icon" href="https://unicons.realm.codes/favicons/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#000000" />
+    <meta name="msapplication-config" content="https://unicons.realm.codes/favicons/browserconfig.xml" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@realmorg/realm/dist/realm.production.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@realmorg/realm/dist/realm.min.css" />
+    <style>
+      /* cyrillic-ext */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2JL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+      }
+      /* cyrillic */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa0ZL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      /* greek-ext */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2ZL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+1F00-1FFF;
+      }
+      /* greek */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1pL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0370-03FF;
+      }
+      /* vietnamese */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2pL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+      }
+      /* latin-ext */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa25L7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      /* latin */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2) format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* cyrillic-ext */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2JL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+      }
+      /* cyrillic */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa0ZL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      /* greek-ext */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2ZL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+1F00-1FFF;
+      }
+      /* greek */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1pL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0370-03FF;
+      }
+      /* vietnamese */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2pL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+      }
+      /* latin-ext */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa25L7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      /* latin */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2) format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* cyrillic-ext */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2JL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+      }
+      /* cyrillic */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa0ZL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      /* greek-ext */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2ZL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+1F00-1FFF;
+      }
+      /* greek */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1pL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0370-03FF;
+      }
+      /* vietnamese */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2pL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+      }
+      /* latin-ext */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa25L7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      /* latin */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2) format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* cyrillic-ext */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 900;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2JL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+      }
+      /* cyrillic */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 900;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa0ZL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      /* greek-ext */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 900;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2ZL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+1F00-1FFF;
+      }
+      /* greek */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 900;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1pL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0370-03FF;
+      }
+      /* vietnamese */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 900;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2pL7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+      }
+      /* latin-ext */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 900;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa25L7W0Q5n-wU.woff2) format("woff2");
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      /* latin */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 900;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2) format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      body {
+        padding: 0;
+        margin: 0;
+        font-family: "Inter", sans-serif;
+        font-size: 1.15rem;
+        background: #0e0f11;
+        color: #fff;
+      }
+      * {
+        box-sizing: border-box;
+      }
+
+      a {
+        color: white;
+        text-decoration: none;
+        background: linear-gradient(to bottom, var(--color-2) 0%, var(--color-1) 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      a:visited {
+        text-decoration: none;
+      }
+
+      .flex {
+        display: flex;
+        align-items: center;
+      }
+
+      .container {
+        max-width: 1024px;
+        margin: 0 auto;
+        gap: 12px;
+        --color-1: #08eba7;
+        --color-2: #08baeb;
+        --color-gray: rgb(123, 123, 123);
+        --color-gray-light: rgb(199, 199, 199);
+        --color-gray-dark: rgb(34, 34, 34);
+        --color-blue: rgba(31, 102, 255, 0.9);
+        --color-red: rgba(255, 0, 0, 0.9);
+      }
+
+      header {
+        flex-direction: column;
+        padding: 2.5rem 0;
+      }
+
+      main.container {
+        max-width: 80vw;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 32px;
+      }
+
+      .logo-tagline {
+        flex-direction: column;
+        font-size: 1.5rem;
+        gap: 12px;
+      }
+
+      .logo-tagline p {
+        margin: 0;
+        font-size: 1.25rem;
+        line-height: 1.5;
+        text-align: center;
+      }
+
+      .logo-tagline span {
+        opacity: 0.65;
+      }
+
+      .tagline {
+        gap: 12px;
+      }
+
+      .tagline a {
+        text-decoration: none;
+        color: inherit;
+        background: none;
+        background-clip: unset;
+        -webkit-background-clip: unset;
+        -webkit-text-fill-color: unset;
+      }
+    </style>
+  </head>
+  <body>
+    <web-app>
+      <import-element from="/elements/unicons-logo.element.html"></import-element>
+      <import-element from="/elements/icon-menu-item.element.html"></import-element>
+      <import-element from="/elements/icon-menu-list.element.html"></import-element>
+      <import-element from="/elements/icon-list.element.html"></import-element>
+      <import-element from="/elements/icon-button.element.html"></import-element>
+      <import-element from="https://realm.codes/elements/realm-logo.element.html"></import-element>
+
+      <global-state name="unicons-selected-icon" type="string" storage="localStorage">ai</global-state>
+      <global-state name="unicons-loaded-icons" type="object">{}</global-state>
+
+      <header class="container flex">
+        <div class="logo-tagline flex">
+          <unicons-logo width="850px" height="148px"></unicons-logo>
+
+          <div class="tagline flex">
+            The Universal Web Component Icons built with
+            <a href="https://realm.codes"><realm-logo size="22"></realm-logo></a>
+          </div>
+
+          <p>
+            <span>Supercharge Your Web Design with Agnostic Icons, Ported from</span>
+            <a href="https://react-icons.github.io/react-icons/" target="_blank">React Icons</a>
+            <br />
+            <span>Compatible with All Frameworks (React, Vue, Svelte, and More!)</span>
+          </p>
+        </div>
+      </header>
+
+      <main class="container flex">
+        <icon-menu-list></icon-menu-list>
+        <icon-list></icon-list>
+      </main>
+    </web-app>
+  </body>
+</html>

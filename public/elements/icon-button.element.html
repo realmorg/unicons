@@ -1,0 +1,31 @@
+<custom-element name="icon-button">
+  <element-state name="is-mounted" type="boolean">false</element-state>
+  <template>
+    <style>
+      :host button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        min-width: 30px;
+        min-height: 30px;
+        border-radius: 10px;
+        background: none;
+        color: var(--color-gray-light);
+        border: none;
+        padding: 8px;
+        transition: filter 0.2s ease-in-out, background 0.2s ease-in-out, color 0.2s ease-in-out;
+      }
+
+      :host button:hover {
+        background: var(--color-gray-dark);
+        filter: drop-shadow(0 0 10px var(--color-blue));
+        color: white;
+      }
+    </style>
+
+    <button ref="button">
+      <slot children></slot>
+    </button>
+  </template>
+</custom-element>

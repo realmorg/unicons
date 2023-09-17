@@ -1,0 +1,17 @@
+<custom-element name="icon-$name">
+  <element-attr name="size" type="string">30px</element-attr>
+  <template>
+    <style>
+      :host {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      svg {
+        width: var(--attr-size);
+        height: var(--attr-size);
+      }
+    </style>
+    $svg
+  </template>
+</custom-element>
