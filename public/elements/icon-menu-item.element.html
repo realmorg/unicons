@@ -5,11 +5,19 @@
 
   <element-flow>
     <listen-event mounted>
-      <script type="module/realm" use="localState, attr">
+      <script type="module/realm" use="$, localState, attr">
         const url = new URL(window.location.href);
         const selectedId = url.searchParams.get('icon');
-        attr.set('is-selected', (!selectedId && attr.get('id') === 'ai') || selectedId === attr.get('id'));
+        const isSelected = (!selectedId && attr.get('id') === 'ai') || selectedId === attr.get('id');
+        attr.set('selected', isSelected);
         localState.set('href', `?icon=${attr.get('id')}`);
+
+        if (isSelected) {
+          document.querySelector('.icon-list-container').scrollTo({
+            top: $.offsetTop - 100,
+            behavior: "smooth",
+          })
+        }
       </script>
     </listen-event>
   </element-flow>
@@ -29,12 +37,12 @@
         transition: color 0.1s ease-in-out, background-color 0.2s ease-in-out;
       }
 
-      :host([is-selected]) a {
+      :host([selected]) a {
         color: var(--color-blue-light);
         background-color: var(--color-gray-dark);
       }
 
-      :host(:not([is-selected])) a:hover {
+      :host(:not([selected])) a:hover {
         color: white;
         filter: drop-shadow(0 0 10px var(--color-red));
       }
