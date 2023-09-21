@@ -1,0 +1,49 @@
+<!-- prettier-ignore -->
+<custom-element name="dialog-dispatcher">
+  <element-state name="is-dialog-open" type="boolean">false</element-state>
+  <element-flow>
+    <trigger-event click="DialogOpener">
+      <set-state name="is-dialog-open" value="true"></set-state>
+    </trigger-event>
+  </element-flow>
+  <template>
+    <style>
+      :host a {
+        color: var(--color-blue-light);
+      }
+
+      :host ol {
+        margin: 0;
+        padding-left: var(--x2-spacing);
+      }
+
+      :host li {
+        font-size: 1rem;
+        margin-bottom: var(--x1-spacing);
+      }
+    </style>
+    <rounded-button ref="DialogOpener">About Unicons</rounded-button>
+
+    <custom-dialog _open="#is-dialog-open">
+      <h1 slot="title">What is Unicons?</h1>
+      <p>
+        These awesome icons are compatible with popular web frameworks like <a href="https://react.dev" target="_blank">React</a>, <a href="https://vuejs.org" target="_blank">Vue</a>, <a href="https://svelte.dev" target="_blank">Svelte</a>, and others, are known as the Universal Web Component Icons.
+      </p>
+
+      <p>
+        The entire of the components are ported from <a href="https://react-icons.github.io/react-icons/" target="_blank">React Icons</a>. For the original icons, you can refer to the provided link.
+      </p>
+      <rounded-button slot="close">OK. Fantastic 🦄</rounded-button>
+    </custom-dialog>
+
+    <custom-dialog _open:global="#is-install-open">
+      <h1 slot="title">How to install</h1>
+      <ol>
+        <li>Install <a href="https://realm.codes" target="_blank">Realm</a> to your webpage or apps (using CDN).</li>
+        <li>Just click the icon and smoothly paste it onto your website.</li>
+        <li>Keep calm it's a web component, allowing you to use the custom element tag anywhere on your site.</li>
+      </ol>
+      <rounded-button slot="close">OK. Cool 🥳</rounded-button>
+    </custom-dialog>
+  </template>
+</custom-element>

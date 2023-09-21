@@ -1,21 +1,17 @@
 <custom-element name="icon-menu-item">
   <element-attr name="id" type="string"></element-attr>
   <element-attr name="selected" type="boolean">false</element-attr>
+  <element-state name="href" type="string"></element-state>
+
   <element-flow>
-    <listen-event on="selected-icon-changed">
-      <script type="module/realm" use="event, globalState, attr">
-        attr.set('is-selected', attr.get('id') === globalState.get('unicons-selected-icon'));
+    <listen-event mounted>
+      <script type="module/realm" use="localState, attr">
+        const url = new URL(window.location.href);
+        const selectedId = url.searchParams.get('icon');
+        attr.set('is-selected', (!selectedId && attr.get('id') === 'ai') || selectedId === attr.get('id'));
+        localState.set('href', `?icon=${attr.get('id')}`);
       </script>
     </listen-event>
-    <listen-event mounted>
-      <send-event name="selected-icon-changed"></send-event>
-    </listen-event>
-    <listen-event statechanged="unicons-selected-icon">
-      <send-event name="selected-icon-changed"></send-event>
-    </listen-event>
-    <trigger-event click="IconMenuItem">
-      <set-state global name="unicons-selected-icon" value="$.id" from="attr"></set-state>
-    </trigger-event>
   </element-flow>
   <template>
     <style>
@@ -25,6 +21,7 @@
 
       :host a {
         display: block;
+        font-size: 1.25rem;
         color: var(--gray);
         text-decoration: none;
         padding: 0.5rem 1rem;
@@ -33,7 +30,7 @@
       }
 
       :host([is-selected]) a {
-        color: white;
+        color: var(--color-blue-light);
         background-color: var(--color-gray-dark);
       }
 
@@ -42,7 +39,7 @@
         filter: drop-shadow(0 0 10px var(--color-red));
       }
     </style>
-    <a ref="IconMenuItem" href="#" onclick="event.preventDefault()">
+    <a ref="IconMenuItem" _href="#href">
       <slot children></slot>
     </a>
   </template>

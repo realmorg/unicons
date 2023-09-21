@@ -1,5 +1,22 @@
 <custom-element name="icon-button">
-  <element-state name="is-mounted" type="boolean">false</element-state>
+  <element-attr name="icon-id" type="string"></element-attr>
+  <element-state name="clicked" type="boolean">false</element-state>
+  <element-flow>
+    <trigger-event click="CopyButton">
+      <script type="module/realm" use="attr, localState">
+        try {
+          const iconId = 'icon-' + attr.get('icon-id');
+          const copyText = `<import-element from="https://unicons.realm.codes/${attr.get('icon-id')}.html"></import-element>\n\n<${iconId}></${iconId}>`;
+          await navigator.clipboard.writeText(copyText);
+          console.log('Icon copied to clipboard: ', iconId);
+          localState.set('clicked', true);
+          setTimeout(() => localState.set('clicked', false), 100);
+        } catch (err) {
+          console.error('Failed to copy: ', err);
+        }
+      </script>
+    </trigger-event>
+  </element-flow>
   <template>
     <style>
       :host button {
@@ -14,17 +31,26 @@
         color: var(--color-gray-light);
         border: none;
         padding: 8px;
-        transition: filter 0.2s ease-in-out, background 0.2s ease-in-out, color 0.2s ease-in-out;
+        transition: filter 0.2s ease-in-out, background 0.2s ease-in-out, color 0.2s ease-in-out, transform 0.2s ease-in-out;
       }
 
       :host button:hover {
         background: var(--color-gray-dark);
         filter: drop-shadow(0 0 10px var(--color-blue));
+        position: relative;
         color: white;
+      }
+
+      :host([\#clicked][eq="true"]) button {
+        transform: scale(1.5);
+      }
+
+      :host([\#clicked][eq="true"]) button:hover {
+        filter: drop-shadow(0 0 10px var(--color-red));
       }
     </style>
 
-    <button ref="button">
+    <button ref="CopyButton">
       <slot children></slot>
     </button>
   </template>
