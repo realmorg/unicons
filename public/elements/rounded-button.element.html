@@ -1,0 +1,31 @@
+<custom-element name="rounded-button">
+  <template>
+    <style>
+      :host button {
+        --color: var(--color-blue-light);
+        border-radius: 50px;
+        border: 1px solid var(--color);
+        padding: var(--x0\.5-spacing) var(--x2-spacing);
+        background: none;
+        color: var(--color);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        width: 100%;
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      :host button:hover {
+        --color: var(--color-green);
+      }
+    </style>
+
+    <button>
+      <slot children></slot>
+    </button>
+  </template>
+</custom-element>

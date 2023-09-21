@@ -1,0 +1,83 @@
+<custom-element name="custom-dialog">
+  <element-attr name="open" type="boolean">false</element-attr>
+  <element-flow>
+    <trigger-event click="Close">
+      <set-attr name="open" value="false"></set-attr>
+    </trigger-event>
+  </element-flow>
+  <template>
+    <style>
+      :host .dialog {
+        display: flex;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 35%;
+        max-height: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        z-index: 999;
+        padding: var(--x4-spacing);
+        color: var(--color-dark);
+        border-radius: var(--x0\.5-spacing);
+      }
+
+      :host .backdrop {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      :host .backdrop-blur {
+        backdrop-filter: blur(15px);
+      }
+
+      :host .backdrop-bg {
+        opacity: 0.3;
+        background: var(--color-dark);
+      }
+
+      :host .dialog .wrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: var(--x2-spacing);
+      }
+
+      slot[name="title"]::slotted(*) {
+        margin: 0;
+        font-size: 2rem;
+      }
+
+      slot[name="close"] {
+        display: block;
+        margin: 0 auto;
+      }
+
+      slot[children]::slotted(p) {
+        font-size: 1rem;
+        line-height: 1.5;
+        margin: 0 0 var(--x2-spacing);
+      }
+    </style>
+
+    <is-visible value="@open" eq="true">
+      <div class="backdrop backdrop-blur"></div>
+      <div ref="Close" class="backdrop backdrop-bg"></div>
+      <div class="dialog">
+        <div class="wrapper">
+          <slot name="title"></slot>
+          <div>
+            <slot children></slot>
+          </div>
+          <slot name="close" ref="Close"></slot>
+        </div>
+      </div>
+    </is-visible>
+  </template>
+</custom-element>

@@ -1,0 +1,70 @@
+<custom-element name="icon-info">
+  <element-attr name="is-loading" type="boolean">false</element-attr>
+  <element-attr name="name" type="string"></element-attr>
+  <element-attr name="license" type="string"></element-attr>
+  <element-attr name="url" type="string"></element-attr>
+  <element-flow>
+    <trigger-event click="InstallButton">
+      <set-state global name="is-install-open" value="true"></set-state>
+    </trigger-event>
+  </element-flow>
+  <template>
+    <style>
+      :host {
+        position: fixed;
+        top: 0;
+        left: var(--sidebar-width);
+        right: 0;
+        padding: var(--x3-spacing) var(--x4-spacing) var(--x5-spacing);
+        background: var(--color-dark);
+        border-bottom: 1px solid var(--color-gray-dark);
+        display: flex;
+        align-items: flex-end;
+        font-size: 1rem;
+        z-index: 1;
+      }
+
+      :host .wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: var(--x1-spacing);
+      }
+
+      :host h2 {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+
+      :host p {
+        margin: 0;
+      }
+
+      :host a {
+        color: var(--color-blue-light);
+      }
+
+      :host a:hover {
+        color: var(--color-green);
+      }
+
+      :host rounded-button {
+        margin-left: auto;
+      }
+    </style>
+
+    <div class="wrapper">
+      <h2>
+        <slot name="@name">Loading...</slot>
+      </h2>
+      <p>
+        License:
+        <slot name="@license">Loading...</slot>
+      </p>
+      <p>
+        Project URL:
+        <a _href="@url"><slot name="@url">Loading...</slot></a>
+      </p>
+    </div>
+    <rounded-button ref="InstallButton">Installation 🔥</rounded-button>
+  </template>
+</custom-element>

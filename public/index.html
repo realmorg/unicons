@@ -3,28 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Unicons: Universal WebComponent Icons by Realm</title>
-    <meta name="description" content="Agnostic Universal Web Component Icons. Free for HTML, Web Apps, and Your Favorite Frameworks." />
+    <title>Unicons: The Universal Web Component Icons by Realm</title>
+    <meta name="description" content="Agnostic Universal Web Component Icons. Free icons for HTML, Web Apps, and Your Favorite Frameworks." />
     <meta name="robots" content="index, follow" />
     <meta property="og:title" content="Unicons: Universal WebComponent Icons by Realm" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://unicons.realm.codes/banner.png" />
-    <meta property="og:url" content="https://unicons.realm.codes/examples/misc/trigger-debounce" />
+    <meta property="og:image" content="https://unicons.realm.codes/assets/banner.png" />
+    <meta property="og:url" content="https://unicons.realm.codes/" />
     <meta name="twitter:creator" content="@oknoorap" />
-    <meta content="https://unicons.realm.codes/banner.png" name="twitter:image" />
-    <meta content="Example: Trigger Debounce" name="twitter:title" />
-    <meta content="This example shows how to use trigger debounce." name="twitter:description" />
+    <meta content="https://unicons.realm.codes/assets/banner.png" name="twitter:image" />
+    <meta content="Unicons by Realm" name="twitter:title" />
+    <meta content="The Universal Web Component Icons built with Realm" name="twitter:description" />
     <meta content="Ribhararnus Pracutian" name="author" />
 
-    <link rel="icon" type="image/svg+xml" href="https://unicons.realm.codes/assets/realm-logo.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="https://unicons.realm.codes/favicons/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="https://unicons.realm.codes/favicons/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="https://unicons.realm.codes/favicons/apple-touch-icon.png" />
-    <link rel="manifest" href="https://unicons.realm.codes/favicons/site.webmanifest" />
-    <link rel="mask-icon" href="https://unicons.realm.codes/favicons/safari-pinned-tab.svg" color="#000000" />
-    <link rel="shortcut icon" href="https://unicons.realm.codes/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+    <link rel="manifest" href="/favicons/site.webmanifest" />
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#000000" />
+    <link rel="shortcut icon" href="/favicons/favicon.ico" />
     <meta name="msapplication-TileColor" content="#000000" />
-    <meta name="msapplication-config" content="https://unicons.realm.codes/favicons/browserconfig.xml" />
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml" />
     <meta name="theme-color" content="#000000" />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
@@ -285,12 +284,47 @@
         src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2) format("woff2");
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
       }
+
+      :root {
+        --color-green: #08eba7;
+        --color-blue: hsla(221, 100%, 56%, 0.9);
+        --color-blue-light: #08baeb;
+        --color-gray: hsla(0, 0%, 48%, 1);
+        --color-gray-light: hsla(0, 0%, 78%, 1);
+        --color-gray-dark: hsla(0, 0%, 13%, 1);
+        --color-red: hsla(0, 100%, 50%, 0.9);
+        --color-dark: hsla(220, 10%, 6%, 1);
+        --sidebar-width: 300px;
+        --base-spacing: 8px;
+        --x0\.5-spacing: calc(var(--base-spacing) / 2);
+        --x1-spacing: var(--base-spacing);
+        --x1\.5-spacing: calc(var(--base-spacing) * 1.5);
+        --x2-spacing: calc(var(--base-spacing) * 2);
+        --x3-spacing: calc(var(--base-spacing) * 3);
+        --x4-spacing: calc(var(--base-spacing) * 4);
+        --x5-spacing: calc(var(--base-spacing) * 5);
+        --x6-spacing: calc(var(--base-spacing) * 6);
+        --x7-spacing: calc(var(--base-spacing) * 7);
+        --x8-spacing: calc(var(--base-spacing) * 8);
+        --x9-spacing: calc(var(--base-spacing) * 9);
+        --x10-spacing: calc(var(--base-spacing) * 10);
+      }
+
+      web-app:not([loaded]) {
+        filter: grayscale(1) blur(10px);
+      }
+
+      web-app[loaded] {
+        transition: opacity 0.35s ease, filter 0.15s ease;
+        transition-delay: 0.2s;
+      }
+
       body {
         padding: 0;
         margin: 0;
         font-family: "Inter", sans-serif;
         font-size: 1.15rem;
-        background: #0e0f11;
+        background: var(--color-dark);
         color: #fff;
       }
       * {
@@ -300,7 +334,7 @@
       a {
         color: white;
         text-decoration: none;
-        background: linear-gradient(to bottom, var(--color-2) 0%, var(--color-1) 100%);
+        background: linear-gradient(to bottom, var(--color-blue-light) 0%, var(--color-green) 100%);
         background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -315,49 +349,57 @@
       }
 
       .container {
-        max-width: 1024px;
         margin: 0 auto;
-        gap: 12px;
-        --color-1: #08eba7;
-        --color-2: #08baeb;
-        --color-gray: rgb(123, 123, 123);
-        --color-gray-light: rgb(199, 199, 199);
-        --color-gray-dark: rgb(34, 34, 34);
-        --color-blue: rgba(31, 102, 255, 0.9);
-        --color-red: rgba(255, 0, 0, 0.9);
+        gap: var(--x1\.5-spacing);
       }
 
       header {
-        flex-direction: column;
-        padding: 2.5rem 0;
+        padding: 1vh 0 1vh var(--sidebar-width);
       }
 
-      main.container {
-        max-width: 80vw;
+      main {
         flex-direction: row;
         align-items: flex-start;
-        gap: 32px;
+        gap: calc(var(--base-spacing) * 2.25);
+        padding-left: var(--sidebar-width);
+      }
+
+      aside {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: 2;
+      }
+
+      .aside-container {
+        position: relative;
+        flex-direction: column;
+        width: var(--sidebar-width);
+      }
+
+      .logo-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 95%;
+        background: var(--color-dark);
+        border-bottom: 1px solid var(--color-gray-dark);
+        z-index: 1;
       }
 
       .logo-tagline {
         flex-direction: column;
-        font-size: 1.5rem;
-        gap: 12px;
-      }
-
-      .logo-tagline p {
-        margin: 0;
-        font-size: 1.25rem;
-        line-height: 1.5;
-        text-align: center;
-      }
-
-      .logo-tagline span {
-        opacity: 0.65;
+        font-size: 0.9rem;
+        line-height: 1.25;
+        gap: var(--x1-spacing);
+        padding: var(--x2-spacing) var(--x4-spacing) var(--x2-spacing) var(--x2-spacing);
       }
 
       .tagline {
-        gap: 12px;
+        gap: var(--x1-spacing);
+        flex-direction: column;
+        text-align: center;
       }
 
       .tagline a {
@@ -368,42 +410,57 @@
         -webkit-background-clip: unset;
         -webkit-text-fill-color: unset;
       }
+
+      .icon-list-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        padding-top: 170px;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
     </style>
   </head>
   <body>
     <web-app>
       <import-element from="/elements/unicons-logo.element.html"></import-element>
+      <import-element from="/elements/rounded-button.element.html"></import-element>
       <import-element from="/elements/icon-menu-item.element.html"></import-element>
       <import-element from="/elements/icon-menu-list.element.html"></import-element>
+      <import-element from="/elements/icon-info.element.html"></import-element>
+      <import-element from="/elements/icon-loader.element.html"></import-element>
       <import-element from="/elements/icon-list.element.html"></import-element>
       <import-element from="/elements/icon-button.element.html"></import-element>
+      <import-element from="/elements/dialog-dispatcher.element.html"></import-element>
+      <import-element from="/elements/custom-dialog.element.html"></import-element>
       <import-element from="https://realm.codes/elements/realm-logo.element.html"></import-element>
-
-      <global-state name="unicons-selected-icon" type="string" storage="localStorage">ai</global-state>
-      <global-state name="unicons-loaded-icons" type="object">{}</global-state>
-
-      <header class="container flex">
-        <div class="logo-tagline flex">
-          <unicons-logo width="850px" height="148px"></unicons-logo>
-
-          <div class="tagline flex">
-            The Universal Web Component Icons built with
-            <a href="https://realm.codes"><realm-logo size="22"></realm-logo></a>
-          </div>
-
-          <p>
-            <span>Supercharge Your Web Design with Agnostic Icons, Ported from</span>
-            <a href="https://react-icons.github.io/react-icons/" target="_blank">React Icons</a>
-            <br />
-            <span>Compatible with All Frameworks (React, Vue, Svelte, and More!)</span>
-          </p>
-        </div>
-      </header>
+      <global-state name="is-install-open" type="boolean">false</global-state>
 
       <main class="container flex">
-        <icon-menu-list></icon-menu-list>
         <icon-list></icon-list>
       </main>
+
+      <aside>
+        <div class="flex aside-container">
+          <div class="logo-header">
+            <div class="flex logo-tagline">
+              <unicons-logo width="200px" height="34px"></unicons-logo>
+              <div class="flex tagline">
+                Universal Web Component Icons
+                <br />
+                <a href="https://realm.codes"><realm-logo size="15" label="BY REALM"></realm-logo></a>
+              </div>
+              <dialog-dispatcher></dialog-dispatcher>
+            </div>
+          </div>
+
+          <div class="icon-list-container">
+            <icon-menu-list></icon-menu-list>
+          </div>
+        </div>
+      </aside>
     </web-app>
   </body>
 </html>

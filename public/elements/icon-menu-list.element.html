@@ -13,12 +13,12 @@
     <style>
       :host {
         display: flex;
-        min-width: 250px;
-        max-height: 100vh;
-        overflow: auto;
+        flex-direction: column;
+        height: 100%;
+        padding: 12px;
       }
     </style>
-    <repeat-list of="#list">
+    <repeat-list ref="list" of="#list">
       <icon-menu-item _id="$.id">
         <slot name="$.label"></slot>
       </icon-menu-item>

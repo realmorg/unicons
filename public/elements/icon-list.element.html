@@ -1,101 +1,79 @@
 <custom-element name="icon-list">
   <element-state name="icon-import" type="html"></element-state>
   <element-state name="icon-render" type="html"></element-state>
+  <element-state name="icon-name" type="string"></element-state>
+  <element-state name="icon-license" type="string"></element-state>
+  <element-state name="icon-project-url" type="string"></element-state>
   <element-state name="is-loading" type="boolean">true</element-state>
   <element-flow>
-    <listen-event on="selected-icon-changed">
-      <set-state name="icon-render" value=""></set-state>
+    <listen-event on="selected-icon-changed"></listen-event>
+    <listen-event mounted>
+      <set-state name="is-loading" value="true"></set-state>
       <set-state name="icon-import" value=""></set-state>
+      <set-state name="icon-render" value=""></set-state>
       <script type="module/realm" use="localState, globalState, ref">
-        localState.set('is-loading', true);
+        const url = new URL(window.location.href);
+        const selectedId = url.searchParams.get('icon') ?? 'ai';
+        const iconId = 'icon-' + selectedId;
 
-        const getLoadedIcons = () => globalState.get('unicons-loaded-icons');
-        const selectedIconId = globalState.get('unicons-selected-icon');
-        const iconId = 'icon-' + selectedIconId;
-        if (!selectedIconId) return;
-
-        const arrChunk = (arr, size) => arr .reduce((acc, _, i) => (i % size) ? acc : [...acc, arr.slice(i, i + size)] , []);
+        const arrChunk = (arr, size) =>
+          arr .reduce((acc, _, i) => (i % size) ? acc : [...acc, arr.slice(i, i + size)], []);
         const isIconElementDefined = (element) => !!customElements.get(`icon-${element}`);
 
-        let info = window[iconId];
-        if (!info) {
-          const response = await fetch(`/meta/${iconId}.json`);
-          window[iconId] = info = await response.json();
-        }
+        const response = await fetch(`/meta/${iconId}.json`);
+        const info = await response.json();
+        localState.set('icon-name', info.name);
+        localState.set('icon-license', info.license);
+        localState.set('icon-project-url', info.projectUrl);
 
         const renderIconElements = () => {
-          localState.set('icon-render', info.elements.reduce((acc, element) => {
-            if (!isIconElementDefined(element)) return acc;
-            return [...acc, `<icon-button><icon-${element}></icon-${element}></icon-button>`]
-          }, []).join(''));
-          localState.set('is-loading', false);
+          localState.set('icon-render', info.elements.reduce(
+            (acc, element) => [...acc, `<icon-button icon-id="${element}"><icon-${element}></icon-${element}></icon-button>`], []
+          ).join(''));
         }
 
-        const importElements = arrChunk(info.elements, 7);
-        const renderElement = (iter = 0) => {
-          const imports = importElements[iter];
-
-          localState.set('icon-import', imports.reduce((acc, element) => {
+        const elementListChunk = arrChunk(info.elements, 7);
+        const importElements = (iter = 0) => {
+          const imports = elementListChunk[iter].reduce((acc, element) => {
             if (isIconElementDefined(element)) return acc;
             return [...acc, `<import-element from="./${element}.html"></import-element>`]
-          }, []).join(''));
+          }, []).join('');
+
+          localState.set('icon-import', imports);
 
           const nextIter = iter + 1;
-          if (importElements[nextIter]) {
-            requestAnimationFrame(() => renderElement(nextIter));
+          if (elementListChunk[nextIter]) {
+            requestAnimationFrame(() => importElements(nextIter));
           } else {
-            globalState.set('unicons-loaded-icons', {
-              ...getLoadedIcons(),
-              [iconId]: true
-            });
-
-            localState.set('icon-import', '');
             renderIconElements();
+            localState.set('icon-import', '');
+            localState.set('is-loading', false);
           }
         };
 
-        const hasLoaded = !!getLoadedIcons()?.[iconId];
-        if (!hasLoaded) {
-          renderElement();
-        } else {
-          renderIconElements();
-        }
+        importElements();
       </script>
-    </listen-event>
-    <listen-event mounted>
-      <send-event name="selected-icon-changed"></send-event>
-    </listen-event>
-    <listen-event statechanged="unicons-selected-icon">
-      <send-event name="selected-icon-changed"></send-event>
     </listen-event>
   </element-flow>
   <template>
     <style>
       :host {
-        max-height: 100vh;
-        min-height: 100vh;
         width: 100%;
-        overflow-y: auto;
-        padding: 12px;
+        padding: 170px var(--x3-spacing) var(--x3-spacing);
+        position: relative;
       }
 
       .icon-list {
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
         align-items: flex-start;
         justify-content: flex-start;
-        gap: 12px;
-      }
-
-      .loader {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        gap: var(--x1\.5-spacing);
       }
     </style>
-    <slot name="#icon-import"></slot>
+
+    <icon-info _is-loading="#is-loading" _name="#icon-name" _license="#icon-license" _url="#icon-project-url"></icon-info>
+
     <is-hidden value="#is-loading" eq="true">
       <div class="icon-list">
         <slot name="#icon-render"></slot>
@@ -103,9 +81,8 @@
     </is-hidden>
 
     <is-visible value="#is-loading" eq="true">
-      <div class="loader">
-        <img loading="lazy" src="/assets/loader.gif" alt="Loading..." />
-      </div>
+      <slot name="#icon-import"></slot>
+      <icon-loader></icon-loader>
     </is-visible>
   </template>
 </custom-element>
